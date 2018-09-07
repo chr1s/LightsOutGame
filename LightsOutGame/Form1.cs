@@ -13,13 +13,16 @@ namespace LightsOutGame
 {
     public partial class Form1 : Form
     {
+        // 2d array for all the grid buttons
+        Button[,] btn = new Button[5,5];
+
         public Form1()
-        {
-            InitializeComponent();
+        {                      
+            InitializeComponent();            
         }
 
         private void Form1_Load(object sender, EventArgs e)
-        {
+        {            
             SetupGameGrid();           
         }
 
@@ -47,7 +50,33 @@ namespace LightsOutGame
             Button button = sender as Button;            
             int buttonGridLocationX = button.Location.X / 60;
             int buttonGridLocationY = button.Location.Y / 60;
+
+            // Change the button that was clicked to red.
             button.BackColor = Color.Red;
+
+            // Change the four adjacent buttons to also be red. (testing purposes)
+            // Button to the left.
+            if (buttonGridLocationX > 0)
+            {
+                btn[buttonGridLocationX - 1, buttonGridLocationY].BackColor = Color.Red;
+            }
+            // Button to the right.
+            if (buttonGridLocationX < 4)
+            {
+                btn[buttonGridLocationX + 1, buttonGridLocationY].BackColor = Color.Red;
+            }
+            // Button above.
+            if (buttonGridLocationY > 0)
+            {
+                btn[buttonGridLocationX, buttonGridLocationY - 1].BackColor = Color.Red;
+            }
+            // Button below.
+            if (buttonGridLocationY < 4)
+            {
+                Debug.WriteLine(buttonGridLocationY);
+                btn[buttonGridLocationX, buttonGridLocationY + 1].BackColor = Color.Red;
+            }           
+
         }
 
         // Setup the 5x5 game grid.
@@ -58,10 +87,7 @@ namespace LightsOutGame
 
             // Used later to randomly assign button starting colours.
             Random rnd = new Random();
-
-            // Buttons for game grid.
-            Button[,] btn = new Button[5, 5];
-           
+            
             // Create the 5x5 grid of buttons.
             for (gridColumn = 0; gridColumn < 5; gridColumn++)
             {
@@ -72,7 +98,8 @@ namespace LightsOutGame
                     {
                         Height = 60,
                         Width = 60,
-                        Location = new Point(60 * gridColumn, 60 * gridRow)
+                        Location = new Point(60 * gridColumn, 60 * gridRow),
+                        Name = gridColumn.ToString() + gridRow.ToString(),
                     };
 
                     // Randomise button colour.                    
