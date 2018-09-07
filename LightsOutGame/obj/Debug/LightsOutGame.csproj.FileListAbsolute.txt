@@ -1,0 +1,10 @@
+C:\Users\Chris\source\repos\LightsOutGame\obj\Debug\LightsOutGame.csprojAssemblyReference.cache
+C:\Users\Chris\source\repos\LightsOutGame\obj\Debug\LightsOutGame.Form1.resources
+C:\Users\Chris\source\repos\LightsOutGame\obj\Debug\LightsOutGame.Properties.Resources.resources
+C:\Users\Chris\source\repos\LightsOutGame\obj\Debug\LightsOutGame.csproj.GenerateResource.cache
+C:\Users\Chris\source\repos\LightsOutGame\obj\Debug\LightsOutGame.csproj.CoreCompileInputs.cache
+C:\Users\Chris\source\repos\LightsOutGame\bin\Debug\LightsOutGame.exe.config
+C:\Users\Chris\source\repos\LightsOutGame\bin\Debug\LightsOutGame.exe
+C:\Users\Chris\source\repos\LightsOutGame\bin\Debug\LightsOutGame.pdb
+C:\Users\Chris\source\repos\LightsOutGame\obj\Debug\LightsOutGame.exe
+C:\Users\Chris\source\repos\LightsOutGame\obj\Debug\LightsOutGame.pdb
