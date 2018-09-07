@@ -20,18 +20,33 @@ namespace LightsOutGame
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            SetupGameGrid();           
+        }
+
+        // Button click event - changes colour.
+        private void OnButtonClick(object sender, EventArgs e)
+        {
+            Button button = sender as Button;            
+            int buttonGridLocationX = button.Location.X / 60;
+            int buttonGridLocationY = button.Location.Y / 60;
+            button.BackColor = Color.Red;
+        }
+
+        // Setup the 5x5 game grid
+        private void SetupGameGrid()
+        {
             int gridColumn;
             int gridRow;
 
             // Buttons for game grid
             Button[,] btn = new Button[5, 5];
-
-            // Create 5x5 grid of buttons
+           
+            // Create the 5x5 grid of buttons
             for (gridColumn = 0; gridColumn < 5; gridColumn++)
             {
                 for (gridRow = 0; gridRow < 5; gridRow++)
                 {
-                    // Set button height/width/location
+                    // Set the button height/width/location
                     btn[gridColumn, gridRow] = new Button
                     {
                         Height = 60,
@@ -39,10 +54,15 @@ namespace LightsOutGame
                         Location = new Point(60 * gridColumn, 60 * gridRow)
                     };
 
+                    // Button click event handler
+                    btn[gridColumn, gridRow].Click += new EventHandler(OnButtonClick);
+
                     // Add button to form
                     Controls.Add(btn[gridColumn, gridRow]);
                 }
             }
+
         }
+
     }
 }
