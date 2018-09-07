@@ -23,6 +23,24 @@ namespace LightsOutGame
             SetupGameGrid();           
         }
 
+        // Randomise the colour being on or off (light or dark.) 75% chance that the light is on.
+        private void RandomiseButtonColour(Button button, Random rnd)
+        {
+            
+            int lightOnOrOff = rnd.Next(0, 100);
+            if (lightOnOrOff < 75)
+            {
+                // Turn light on.
+                button.BackColor = Color.LightGreen;                
+            }
+            else
+            {
+                // Turn light off.
+                button.BackColor = Color.DarkGreen;
+            }
+            
+        }
+
         // Button click event - changes colour.
         private void OnButtonClick(object sender, EventArgs e)
         {
@@ -32,21 +50,24 @@ namespace LightsOutGame
             button.BackColor = Color.Red;
         }
 
-        // Setup the 5x5 game grid
+        // Setup the 5x5 game grid.
         private void SetupGameGrid()
         {
             int gridColumn;
             int gridRow;
 
-            // Buttons for game grid
+            // Used later to randomly assign button starting colours.
+            Random rnd = new Random();
+
+            // Buttons for game grid.
             Button[,] btn = new Button[5, 5];
            
-            // Create the 5x5 grid of buttons
+            // Create the 5x5 grid of buttons.
             for (gridColumn = 0; gridColumn < 5; gridColumn++)
             {
                 for (gridRow = 0; gridRow < 5; gridRow++)
                 {
-                    // Set the button height/width/location
+                    // Set the button height/width/location.
                     btn[gridColumn, gridRow] = new Button
                     {
                         Height = 60,
@@ -54,10 +75,13 @@ namespace LightsOutGame
                         Location = new Point(60 * gridColumn, 60 * gridRow)
                     };
 
-                    // Button click event handler
+                    // Randomise button colour.                    
+                    RandomiseButtonColour(btn[gridColumn, gridRow], rnd);
+
+                    // Button click event handler.
                     btn[gridColumn, gridRow].Click += new EventHandler(OnButtonClick);
 
-                    // Add button to form
+                    // Add button to form.
                     Controls.Add(btn[gridColumn, gridRow]);
                 }
             }
