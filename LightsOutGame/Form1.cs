@@ -44,39 +44,52 @@ namespace LightsOutGame
             
         }
 
-        // Button click event - changes colour.
+        // Button click event - toggles light on or off.
         private void OnButtonClick(object sender, EventArgs e)
         {
             Button button = sender as Button;            
             int buttonGridLocationX = button.Location.X / 60;
             int buttonGridLocationY = button.Location.Y / 60;
 
-            // Change the button that was clicked to red.
-            button.BackColor = Color.Red;
+            // Toggle the button that was clicked.           
+            ToggleLight(button);
 
-            // Change the four adjacent buttons to also be red. (testing purposes)
-            // Button to the left.
+            // Toggle the four adjacent buttons to be turned on or off
+            // left
             if (buttonGridLocationX > 0)
-            {
-                btn[buttonGridLocationX - 1, buttonGridLocationY].BackColor = Color.Red;
+            {                
+                ToggleLight(btn[buttonGridLocationX - 1, buttonGridLocationY]);
             }
-            // Button to the right.
+            // right
             if (buttonGridLocationX < 4)
-            {
-                btn[buttonGridLocationX + 1, buttonGridLocationY].BackColor = Color.Red;
+            {                
+                ToggleLight(btn[buttonGridLocationX + 1, buttonGridLocationY]);
             }
-            // Button above.
+            // above
             if (buttonGridLocationY > 0)
-            {
-                btn[buttonGridLocationX, buttonGridLocationY - 1].BackColor = Color.Red;
+            {                
+                ToggleLight(btn[buttonGridLocationX, buttonGridLocationY - 1]);
             }
-            // Button below.
+            // below
             if (buttonGridLocationY < 4)
             {
-                Debug.WriteLine(buttonGridLocationY);
-                btn[buttonGridLocationX, buttonGridLocationY + 1].BackColor = Color.Red;
+                ToggleLight(btn[buttonGridLocationX, buttonGridLocationY + 1]);
             }           
 
+        }
+
+        // Swap button colours
+        private void ToggleLight(Button button)
+        {
+            if (button.BackColor == Color.DarkGreen)
+            {
+                button.BackColor = Color.LightGreen;
+            }
+
+            else if (button.BackColor == Color.LightGreen)
+            {
+                button.BackColor = Color.DarkGreen;
+            }
         }
 
         // Setup the 5x5 game grid.
