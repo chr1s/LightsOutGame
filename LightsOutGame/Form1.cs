@@ -16,6 +16,7 @@ namespace LightsOutGame
         // 2d array for all the grid buttons
         Button[,] btn = new Button[5,5];
 
+        
         public Form1()
         {                      
             InitializeComponent();            
@@ -100,7 +101,8 @@ namespace LightsOutGame
 
             // Used later to randomly assign button starting colours.
             Random rnd = new Random();
-            
+
+
             // Create the 5x5 grid of buttons.
             for (gridColumn = 0; gridColumn < 5; gridColumn++)
             {
@@ -128,5 +130,24 @@ namespace LightsOutGame
 
         }
 
+        // Reset game
+        private void resetBtn_Click(object sender, EventArgs e)
+        {
+            int gridColumn;
+            int gridRow;
+
+            // Used to randomly assign starting colour.
+            Random rnd = new Random();
+
+            // Create the 5x5 grid of buttons.
+            for (gridColumn = 0; gridColumn < 5; gridColumn++)
+            {
+                for (gridRow = 0; gridRow < 5; gridRow++)
+                {
+                    RandomiseButtonColour(btn[gridColumn, gridRow], rnd);
+                }
+
+            }
+        }
     }
 }
