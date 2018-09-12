@@ -14,41 +14,41 @@ namespace LightsOutGame
     public partial class Form1 : Form
     {
         // 2d array for all the grid buttons
-        Button[,] btn = new Button[5,5];
+        Button[,] btn = new Button[5, 5];
 
-        
+
         public Form1()
-        {                      
-            InitializeComponent();            
+        {
+            InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
-        {            
-            SetupGameGrid();           
+        {
+            SetupGameGrid();
         }
 
         // Randomise the colour being on or off (light or dark.) 75% chance that the light is on.
         private void RandomiseButtonColour(Button button, Random rnd)
         {
-            
+
             int lightOnOrOff = rnd.Next(0, 100);
             if (lightOnOrOff < 75)
             {
                 // Turn light on.
-                button.BackColor = Color.LightGreen;                
+                button.BackColor = Color.LightGreen;
             }
             else
             {
                 // Turn light off.
                 button.BackColor = Color.DarkGreen;
             }
-            
+
         }
 
         // Button click event - toggles light on or off.
         private void OnButtonClick(object sender, EventArgs e)
         {
-            Button button = sender as Button;            
+            Button button = sender as Button;
             int buttonGridLocationX = button.Location.X / 60;
             int buttonGridLocationY = button.Location.Y / 60;
 
@@ -58,24 +58,25 @@ namespace LightsOutGame
             // Toggle the four adjacent buttons to be turned on or off
             // left
             if (buttonGridLocationX > 0)
-            {                
+            {
                 ToggleLight(btn[buttonGridLocationX - 1, buttonGridLocationY]);
             }
             // right
             if (buttonGridLocationX < 4)
-            {                
+            {
                 ToggleLight(btn[buttonGridLocationX + 1, buttonGridLocationY]);
             }
             // above
             if (buttonGridLocationY > 0)
-            {                
+            {
                 ToggleLight(btn[buttonGridLocationX, buttonGridLocationY - 1]);
             }
             // below
             if (buttonGridLocationY < 4)
             {
                 ToggleLight(btn[buttonGridLocationX, buttonGridLocationY + 1]);
-            }           
+            }
+            CheckGameEndStatus();
 
         }
 
@@ -149,5 +150,42 @@ namespace LightsOutGame
 
             }
         }
+
+        // Check if game has ended
+        private void CheckGameEndStatus()
+        {
+            int gridColumn;
+            int gridRow;
+            Boolean status = true;
+            // Create the 5x5 grid of buttons.
+            for (gridColumn = 0; gridColumn < 5; gridColumn++)
+            {
+                for (gridRow = 0; gridRow < 5; gridRow++)
+                {
+
+                    if (btn[gridColumn, gridRow].BackColor == Color.LightGreen)
+                    {
+                        status = false;
+                    }
+                }
+
+            }
+            // If all lights are off, ask to play again
+            if (status == true)
+            {
+                DialogResult playAgainResult = MessageBox.Show("You Win! Would you like to play again?", "Message", MessageBoxButtons.YesNo);
+                // Yes, reset grid
+                if (playAgainResult == DialogResult.Yes)
+                {
+                    resetBtn.PerformClick();
+                }
+                // No, exit application
+                if (playAgainResult == DialogResult.No)
+                {
+                    System.Windows.Forms.Application.Exit();
+                }
+            }
+        }
     }
 }
+
