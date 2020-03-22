@@ -13,8 +13,12 @@ namespace LightsOutGame
 {
     public partial class Form1 : Form
     {
-        // 2d array for all the grid buttons
+        // 2d array for all the grid buttons.
         Button[,] btn = new Button[5, 5];
+        // Used later to randomly assign button starting colours.
+        Random rnd = new Random();
+        // We don't want to check whether the game is completed when setting up lights.
+        Boolean setup = false;
 
 
         public Form1()
@@ -25,25 +29,9 @@ namespace LightsOutGame
         private void Form1_Load(object sender, EventArgs e)
         {
             SetupGameGrid();
-        }
+        }      
 
-        // Randomise the colour being on or off (light or dark.) 75% chance that the light is on.
-        private void RandomiseButtonColour(Button button, Random rnd)
-        {
-
-            int lightOnOrOff = rnd.Next(0, 100);
-            if (lightOnOrOff < 75)
-            {
-                // Turn light on.
-                button.BackColor = Color.LightGreen;
-            }
-            else
-            {
-                // Turn light off.
-                button.BackColor = Color.DarkGreen;
-            }
-
-        }
+        
 
         // Button click event - toggles light on or off.
         private void OnButtonClick(object sender, EventArgs e)
@@ -76,7 +64,10 @@ namespace LightsOutGame
             {
                 ToggleLight(btn[buttonGridLocationX, buttonGridLocationY + 1]);
             }
-            CheckGameEndStatus();
+            if (setup)
+            {
+                CheckGameEndStatus();
+            }
 
         }
 
@@ -94,15 +85,39 @@ namespace LightsOutGame
             }
         }
 
-        // Setup the 5x5 game grid.
-        private void SetupGameGrid()
+        private void SetGameGridLights()
         {
             int gridColumn;
             int gridRow;
 
-            // Used later to randomly assign button starting colours.
-            Random rnd = new Random();
+            setup = false;
+            //Create the 5x5 grid of buttons.
+            for (gridColumn = 0; gridColumn < 5; gridColumn++)
+            {
+                for (gridRow = 0; gridRow < 5; gridRow++)
+                {
+                    btn[gridColumn, gridRow].BackColor = Color.DarkGreen;
+                
+                }
 
+            }
+
+            // Turn some lights on
+            for (int i = 0; i < 10; i++)
+            {
+                int value1 = rnd.Next(0, 5);
+                int value2 = rnd.Next(0, 5);
+                btn[value1, value2].PerformClick();           
+      
+            }
+            // Game is setup, will now check for completion.
+            setup = true;            
+        }
+
+        private void SetupGameGrid()
+        {
+            int gridColumn;
+            int gridRow;                   
 
             // Create the 5x5 grid of buttons.
             for (gridColumn = 0; gridColumn < 5; gridColumn++)
@@ -116,39 +131,27 @@ namespace LightsOutGame
                         Width = 60,
                         Location = new Point(60 * gridColumn, 60 * gridRow),
                         Name = gridColumn.ToString() + gridRow.ToString(),
-                    };
+                      //  BackColor = Color.DarkGreen
+                    };                   
 
-                    // Randomise button colour.                    
-                    RandomiseButtonColour(btn[gridColumn, gridRow], rnd);
-
-                    // Button click event handler.
-                    btn[gridColumn, gridRow].Click += new EventHandler(OnButtonClick);
+                     //Button click event handler.
+                     btn[gridColumn, gridRow].Click += new EventHandler(OnButtonClick);
 
                     // Add button to form.
                     Controls.Add(btn[gridColumn, gridRow]);
                 }
             }
+            SetGameGridLights();       
+
 
         }
+        
 
-        // Reset game
+        // Reset game, grid is already setup, just need to reset lights.
         private void resetBtn_Click(object sender, EventArgs e)
-        {
-            int gridColumn;
-            int gridRow;
+        {            
+            SetGameGridLights();
 
-            // Used to randomly assign starting colour.
-            Random rnd = new Random();
-
-            // Create the 5x5 grid of buttons.
-            for (gridColumn = 0; gridColumn < 5; gridColumn++)
-            {
-                for (gridRow = 0; gridRow < 5; gridRow++)
-                {
-                    RandomiseButtonColour(btn[gridColumn, gridRow], rnd);
-                }
-
-            }
         }
 
         // Check if game has ended
@@ -157,7 +160,7 @@ namespace LightsOutGame
             int gridColumn;
             int gridRow;
             Boolean status = true;
-            // Create the 5x5 grid of buttons.
+            // Loop through grid and check if lights are turned on.
             for (gridColumn = 0; gridColumn < 5; gridColumn++)
             {
                 for (gridRow = 0; gridRow < 5; gridRow++)
