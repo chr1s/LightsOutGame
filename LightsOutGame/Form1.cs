@@ -130,7 +130,7 @@ namespace LightsOutGame
         {
             int gridColumn;
             int gridRow;                   
-
+            
             // Create the 5x5 grid of buttons.
             for (gridColumn = 0; gridColumn < 5; gridColumn++)
             {
@@ -150,7 +150,7 @@ namespace LightsOutGame
                      btn[gridColumn, gridRow].Click += new EventHandler(OnButtonClick);                   
 
                     // Add button to form.
-                    Controls.Add(btn[gridColumn, gridRow]);
+                    GameWindow.Controls.Add(btn[gridColumn, gridRow]);
                 }
             }
             SetGameGridLights();       
