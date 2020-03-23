@@ -73,10 +73,10 @@ namespace LightsOutGame
                 CheckGameEndStatus();
             }
 
-        }
+        }      
 
-        // Swap button colours
-        private void ToggleLight(Button button)
+            // Swap button colours
+            private void ToggleLight(Button button)
         {
             if (button.BackColor == Color.DarkGreen)
             {
@@ -143,11 +143,11 @@ namespace LightsOutGame
                         Width = 60,
                         Location = new Point(60 * gridColumn, 60 * gridRow),
                         Name = gridColumn.ToString() + gridRow.ToString(),
-                      //  BackColor = Color.DarkGreen
-                    };                   
+                        FlatStyle = FlatStyle.Flat,                        
+                     };                   
 
                      //Button click event handler.
-                     btn[gridColumn, gridRow].Click += new EventHandler(OnButtonClick);
+                     btn[gridColumn, gridRow].Click += new EventHandler(OnButtonClick);                   
 
                     // Add button to form.
                     Controls.Add(btn[gridColumn, gridRow]);
