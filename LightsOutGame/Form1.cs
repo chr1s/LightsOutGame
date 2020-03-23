@@ -19,6 +19,10 @@ namespace LightsOutGame
         Random rnd = new Random();
         // We don't want to check whether the game is completed when setting up lights.
         Boolean setup = false;
+        // Create sounds
+        System.Media.SoundPlayer lightsOn = new System.Media.SoundPlayer(@"Resources\lights_on.wav");
+        System.Media.SoundPlayer lightsOff = new System.Media.SoundPlayer(@"Resources\lights_off.wav");
+        System.Media.SoundPlayer gameWon = new System.Media.SoundPlayer(@"Resources\game_won.wav");
 
 
         public Form1()
@@ -77,11 +81,19 @@ namespace LightsOutGame
             if (button.BackColor == Color.DarkGreen)
             {
                 button.BackColor = Color.LightGreen;
+                if (setup)
+                {
+                    lightsOn.Play();
+                }
             }
 
             else if (button.BackColor == Color.LightGreen)
             {
                 button.BackColor = Color.DarkGreen;
+                if (setup)
+                {
+                    lightsOff.Play();
+                }
             }
         }
 
@@ -176,6 +188,7 @@ namespace LightsOutGame
             // If all lights are off, ask to play again
             if (status == true)
             {
+                gameWon.Play();
                 DialogResult playAgainResult = MessageBox.Show("You Win! Would you like to play again?", "Message", MessageBoxButtons.YesNo);
                 // Yes, reset grid
                 if (playAgainResult == DialogResult.Yes)
