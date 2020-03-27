@@ -19,6 +19,8 @@ namespace LightsOutGame
         Random rnd = new Random();
         // We don't want to check whether the game is completed when setting up lights.
         Boolean setup = false;
+        //Number of moves taken
+        int numOfMoves = 0;
         // Create sounds
         System.Media.SoundPlayer lightsOn = new System.Media.SoundPlayer(@"Resources\lights_on.wav");
         System.Media.SoundPlayer lightsOff = new System.Media.SoundPlayer(@"Resources\lights_off.wav");
@@ -70,6 +72,8 @@ namespace LightsOutGame
             }
             if (setup)
             {
+                numOfMoves += 1;
+                numMoves.Text = numOfMoves.ToString();
                 CheckGameEndStatus();
             }
 
@@ -161,7 +165,9 @@ namespace LightsOutGame
 
         // Reset game, grid is already setup, just need to reset lights.
         private void resetBtn_Click(object sender, EventArgs e)
-        {            
+        {
+            numOfMoves = 0;
+            numMoves.Text = numOfMoves.ToString();
             SetGameGridLights();
 
         }
@@ -202,6 +208,7 @@ namespace LightsOutGame
                 }
             }
         }
+
     }
 }
 
