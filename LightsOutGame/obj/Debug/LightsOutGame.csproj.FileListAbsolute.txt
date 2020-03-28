@@ -13,8 +13,8 @@ C:\Users\chris\Documents\GitHub\LightsOutGame\LightsOutGame\obj\Debug\LightsOutG
 C:\Users\chris\Documents\GitHub\LightsOutGame\LightsOutGame\bin\Debug\LightsOutGame.exe.config
 C:\Users\chris\Documents\GitHub\LightsOutGame\LightsOutGame\bin\Debug\LightsOutGame.exe
 C:\Users\chris\Documents\GitHub\LightsOutGame\LightsOutGame\bin\Debug\LightsOutGame.pdb
-C:\Users\chris\Documents\GitHub\LightsOutGame\LightsOutGame\obj\Debug\LightsOutGame.csprojAssemblyReference.cache
 C:\Users\chris\Documents\GitHub\LightsOutGame\LightsOutGame\obj\Debug\LightsOutGame.Form1.resources
 C:\Users\chris\Documents\GitHub\LightsOutGame\LightsOutGame\obj\Debug\LightsOutGame.Properties.Resources.resources
 C:\Users\chris\Documents\GitHub\LightsOutGame\LightsOutGame\obj\Debug\LightsOutGame.csproj.GenerateResource.cache
 C:\Users\chris\Documents\GitHub\LightsOutGame\LightsOutGame\obj\Debug\LightsOutGame.csproj.CoreCompileInputs.cache
+C:\Users\chris\Documents\GitHub\LightsOutGame\LightsOutGame\obj\Debug\LightsOutGame.csprojAssemblyReference.cache

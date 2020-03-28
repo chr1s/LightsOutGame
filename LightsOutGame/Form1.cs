@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Configuration;
+using System.Reflection;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -21,6 +23,9 @@ namespace LightsOutGame
         Boolean setup = false;
         //Number of moves taken
         int numOfMoves = 0;
+        // Cached best score
+        string bestScore = ConfigurationManager.AppSettings.Get("bestScore");
+        
         // Create sounds
         System.Media.SoundPlayer lightsOn = new System.Media.SoundPlayer(@"Resources\lights_on.wav");
         System.Media.SoundPlayer lightsOff = new System.Media.SoundPlayer(@"Resources\lights_off.wav");
@@ -73,7 +78,7 @@ namespace LightsOutGame
             if (setup)
             {
                 numOfMoves += 1;
-                numMoves.Text = numOfMoves.ToString();
+                numMovesText.Text = numOfMoves.ToString();
                 CheckGameEndStatus();
             }
 
@@ -133,7 +138,7 @@ namespace LightsOutGame
         private void SetupGameGrid()
         {
             int gridColumn;
-            int gridRow;                   
+            int gridRow;
             
             // Create the 5x5 grid of buttons.
             for (gridColumn = 0; gridColumn < 5; gridColumn++)
@@ -157,6 +162,8 @@ namespace LightsOutGame
                     GameWindow.Controls.Add(btn[gridColumn, gridRow]);
                 }
             }
+            
+            bestScoreText.Text = bestScore;
             SetGameGridLights();       
 
 
@@ -167,7 +174,8 @@ namespace LightsOutGame
         private void resetBtn_Click(object sender, EventArgs e)
         {
             numOfMoves = 0;
-            numMoves.Text = numOfMoves.ToString();
+            numMovesText.Text = numOfMoves.ToString();
+            bestScoreText.Text = bestScore;
             SetGameGridLights();
 
         }
@@ -195,6 +203,18 @@ namespace LightsOutGame
             if (status == true)
             {
                 gameWon.Play();
+                if (bestScore == "-")
+                {
+                    bestScore = numOfMoves.ToString();
+                    UpdateBestScore(bestScore);
+                }
+                else if (numOfMoves < int.Parse(bestScoreText.Text)) {
+                    bestScore = numOfMoves.ToString();
+                    UpdateBestScore(bestScore);
+                }
+
+
+                
                 DialogResult playAgainResult = MessageBox.Show("You Win! Would you like to play again?", "Message", MessageBoxButtons.YesNo);
                 // Yes, reset grid
                 if (playAgainResult == DialogResult.Yes)
@@ -209,6 +229,20 @@ namespace LightsOutGame
             }
         }
 
+        private void UpdateBestScore(string score)
+        {
+            Configuration config = ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location);
+            config.AppSettings.Settings["bestScore"].Value = score;
+            config.Save();
+
+            ConfigurationManager.RefreshSection("appSettings");
+            
+        }
+
+        private void bestScoreText_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 
